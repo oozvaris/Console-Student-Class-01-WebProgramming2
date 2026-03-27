@@ -12,7 +12,7 @@ namespace Console_Student_Class_01
 
         public string StudentName { get; set; }
 
-        public string StudentSurname { get; set; }
+        public string StudentSurename { get; set; }
 
         public string StudentEmail { get; set; }
 

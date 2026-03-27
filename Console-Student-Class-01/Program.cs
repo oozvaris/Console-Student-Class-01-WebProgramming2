@@ -30,7 +30,7 @@ namespace Console_Student_Class_01
             //student.StudentEmail = studentEmail;
 
             Console.WriteLine("Registered Student Information:");
-            Console.WriteLine($"Student ID = {student.StudentID} Student Name = {student.StudentName} Student Surname = {student.StudentSurname} Student Email = {student.StudentEmail}");
+            Console.WriteLine($"Student ID = {student.StudentID} Student Name = {student.StudentName} Student Surname = {student.StudentSurename} Student Email = {student.StudentEmail}");
 
             return student;
 
@@ -41,7 +41,7 @@ namespace Console_Student_Class_01
             Console.WriteLine("Student List");
             foreach (var item in studentList)
             {
-                Console.WriteLine($"Student ID = {item.StudentID} Student Name = {item.StudentName} Student Surname = {item.StudentSurname} Student Email = {item.StudentEmail}");
+                Console.WriteLine($"Student ID = {item.StudentID} Student Name = {item.StudentName} Student Surname = {item.StudentSurename} Student Email = {item.StudentEmail}");
             }
         }
 
@@ -52,7 +52,7 @@ namespace Console_Student_Class_01
             Student foundStudent = studentList.FirstOrDefault(s => s.StudentID == studentId);
             if (foundStudent != null)
             {
-                Console.WriteLine($"Student found: ID = {foundStudent.StudentID}, Name = {foundStudent.StudentName}, Surname = {foundStudent.StudentSurname}, Email = {foundStudent.StudentEmail}");
+                Console.WriteLine($"Student found: ID = {foundStudent.StudentID}, Name = {foundStudent.StudentName}, Surname = {foundStudent.StudentSurename}, Email = {foundStudent.StudentEmail}");
             }
             else
             {
@@ -65,7 +65,7 @@ namespace Console_Student_Class_01
         {
             var configuration = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: false)
                 .Build();
 
             var studentRepository = new StudentRepository(configuration);
@@ -157,7 +157,8 @@ namespace Console_Student_Class_01
                 else if (answer == "2")
                 {
                     // ListStudents(studentList);
-                    
+                    studentService.DisplayStudentListAsync().Wait();
+
                 }
                 else if (answer == "3")
                 {

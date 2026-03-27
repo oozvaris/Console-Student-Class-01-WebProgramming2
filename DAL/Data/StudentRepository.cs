@@ -26,7 +26,7 @@ namespace DAL.Data
             var students = new List<Student>();
             const string sql = """
                                SELECT StudentID, StudentName, StudentSurename, StudentEmail 
-                               FROM Students
+                               FROM Student
                                """;
             await using var connection = new SqlConnection(_connectionString);
             await using var command = new SqlCommand(sql, connection);
