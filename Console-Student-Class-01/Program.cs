@@ -8,35 +8,6 @@ namespace Console_Student_Class_01
     internal class Program
     {
 
-        public static Student RegisterStudents()
-        {
-
-            Console.WriteLine("Enter student Id:");
-            int studentId = Convert.ToInt32(Console.ReadLine());
-
-            Console.WriteLine("Enter student name:");
-            string studentName = Console.ReadLine();
-
-            //Console.WriteLine("Enter student surname:");
-            //string studentSurname = Console.ReadLine();
-
-            //Console.WriteLine("Enter student email:");
-            //string studentEmail = Console.ReadLine();
-
-            Student student = new Student();
-
-            student.StudentID = studentId;
-            student.StudentName = studentName;
-            //student.StudentSurname = studentSurname;
-            //student.StudentEmail = studentEmail;
-
-            Console.WriteLine("Registered Student Information:");
-            Console.WriteLine($"Student ID = {student.StudentID} Student Name = {student.StudentName} Student Surname = {student.StudentSurename} Student Email = {student.StudentEmail}");
-
-            return student;
-
-        }
-
         public static void ListStudents(List<Student> studentList)
         {
             Console.WriteLine("Student List");
@@ -91,12 +62,17 @@ namespace Console_Student_Class_01
                 string answer = Console.ReadLine();
                 if (answer == "1")
                 {
-                    student = RegisterStudents();
-                    studentList.Add(student);
+                    // student = RegisterStudents();
+                    student = studentService.RegisterStudent();
+
+                    // studentList.Add(student);
+                    studentService.AddStudentAsync(student).Wait();
+                    
                 }
                 else if (answer == "2")
                 {
                     // ListStudents(studentList);
+                    Console.WriteLine("Displaying all students...");
                     studentService.DisplayStudentListAsync().Wait();
 
                 }

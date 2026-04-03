@@ -12,7 +12,7 @@ namespace Console_Student_Class_01
     {
         private readonly IStudentRepository _studentRepository;
 
-        public StudentService (IStudentRepository studentRepository)
+        public StudentService(IStudentRepository studentRepository)
         {
             _studentRepository = studentRepository;
         }
@@ -21,7 +21,9 @@ namespace Console_Student_Class_01
         {
             var students = await _studentRepository.GetAllAsync();
 
-            foreach(Student s in students)
+
+
+            foreach (Student s in students)
             {
                 Console.WriteLine("Student List Item");
                 Console.WriteLine("Student ID : " + s.StudentID);
@@ -29,11 +31,32 @@ namespace Console_Student_Class_01
                 Console.WriteLine("Student Surename : " + s.StudentSurename);
                 Console.WriteLine("Student Email : " + s.StudentEmail);
                 Console.WriteLine("------------------------------------------------");
+            }
 
-            }   
+            Console.WriteLine("Total number of students: " + students.Count);
+        }
 
+        public async Task AddStudentAsync(Student student)
+        {
+            int newStudentId = await _studentRepository.CreateAsync(student);
+            Console.WriteLine($"New student added with ID: {newStudentId}");
+            Console.WriteLine("------------------------------------------------");
+        }
 
-
+        public Student RegisterStudent()
+        {
+            Console.WriteLine("Enter student name:");
+            string name = Console.ReadLine();
+            Console.WriteLine("Enter student surname:");
+            string surname = Console.ReadLine();
+            Console.WriteLine("Enter student email:");
+            string email = Console.ReadLine();
+            return new Student
+            {
+                StudentName = name,
+                StudentSurename = surname,
+                StudentEmail = email
+            };
 
         }
 

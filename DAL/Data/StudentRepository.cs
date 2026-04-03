@@ -31,6 +31,7 @@ namespace DAL.Data
                                """;
             await using var connection = new SqlConnection(_connectionString);
             await using var command = new SqlCommand(sql, connection);
+
             await connection.OpenAsync();
             await using var reader = await command.ExecuteReaderAsync();
 
@@ -48,5 +49,28 @@ namespace DAL.Data
 
             return students;
         }
+
+        public async Task<int> CreateAsync(Student student)
+        {
+            const string sql = """
+                               INSERT INTO Student (StudentName, StudentSurename, StudentEmail) 
+                               VALUES (@StudentName, @StudentSurename, @StudentEmail);
+                               SELECT SCOPE_IDENTITY();
+                               """;
+
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand(sql, connection);
+
+            command.Parameters.AddWithValue("@StudentName", student.StudentName);
+            command.Parameters.AddWithValue("@StudentSurename", student.StudentSurename);
+            command.Parameters.AddWithValue("@StudentEmail", student.StudentEmail);
+
+            await connection.OpenAsync();
+
+            var result = await command.ExecuteScalarAsync();
+
+            return Convert.ToInt32(result);
+        }
+
     }
 }
