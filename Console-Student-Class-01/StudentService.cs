@@ -60,5 +60,20 @@ namespace Console_Student_Class_01
 
         }
 
+        public async Task DeleteStudentAsync(int studentId)
+        {
+            await _studentRepository.DeleteAsync(studentId);
+            Console.WriteLine($"Student with ID {studentId} has been deleted.");
+            Console.WriteLine("------------------------------------------------");
+
+        }
+
+        public async Task UpdateStudentAsync(Student student)
+        {
+            await _studentRepository.UpdateAsync(student);
+            Console.WriteLine($"Student with ID {student.StudentID} has been updated.");
+            Console.WriteLine("------------------------------------------------");
+        }
+
     }
 }

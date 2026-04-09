@@ -15,8 +15,8 @@ namespace DAL.Data.Interfaces
         //Task<Student> GetByNameAsync(string name);
         //Task<Student> GetByEmailAsync(string email);
         Task<int> CreateAsync(Student student);
-        //Task UpdateAsync(Student student);
-        //Task DeleteAsync(int id);
+        Task UpdateAsync(Student student);
+        Task DeleteAsync(int id);
 
     }
 }

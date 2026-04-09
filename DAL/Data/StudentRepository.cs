@@ -72,5 +72,34 @@ namespace DAL.Data
             return Convert.ToInt32(result);
         }
 
+        public async Task DeleteAsync(int id)
+        {
+            const string sql = "DELETE FROM Student WHERE StudentID = @StudentID";
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@StudentID", id);
+            await connection.OpenAsync();
+            await command.ExecuteNonQueryAsync();
+
+        }
+
+        public async Task UpdateAsync(Student student)
+        {
+            const string sql = """
+                               UPDATE Student 
+                               SET StudentName = @StudentName, StudentSurename = @StudentSurename, StudentEmail = @StudentEmail 
+                               WHERE StudentID = @StudentID
+                               """;
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@StudentID", student.StudentID);
+            command.Parameters.AddWithValue("@StudentName", student.StudentName);
+            command.Parameters.AddWithValue("@StudentSurename", student.StudentSurename);
+            command.Parameters.AddWithValue("@StudentEmail", student.StudentEmail);
+            await connection.OpenAsync();
+            await command.ExecuteNonQueryAsync();
+
+        }
+
     }
 }

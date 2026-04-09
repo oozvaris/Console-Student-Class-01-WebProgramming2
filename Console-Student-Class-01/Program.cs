@@ -58,7 +58,9 @@ namespace Console_Student_Class_01
                 Console.WriteLine("1 - Do you want to add a new student");
                 Console.WriteLine("2 - Display All Students");
                 Console.WriteLine("3 - Find Student");
-                Console.WriteLine("4 - Exit");
+                Console.WriteLine("4 - Delete Student");
+                Console.WriteLine("5 - Edit Student");
+                Console.WriteLine("10 - Exit");
                 string answer = Console.ReadLine();
                 if (answer == "1")
                 {
@@ -81,6 +83,32 @@ namespace Console_Student_Class_01
                     FindStudent(studentList);
                 }
                 else if (answer == "4")
+                {
+                    Console.WriteLine("Enter student ID to delete:");
+                    int studentId = Convert.ToInt32(Console.ReadLine());
+                    studentService.DeleteStudentAsync(studentId).Wait();
+                }
+                else if (answer == "5")
+                {
+                    Console.WriteLine("Enter student ID to update:");
+                    int studentId = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine("Enter new student name:");
+                    string newName = Console.ReadLine();
+                    Console.WriteLine("Enter new student surname:");
+                    string newSurname = Console.ReadLine();
+                    Console.WriteLine("Enter new student email:");
+                    string newEmail = Console.ReadLine();
+                    Student updatedStudent = new Student
+                    {
+                        StudentID = studentId,
+                        StudentName = newName,
+                        StudentSurename = newSurname,
+                        StudentEmail = newEmail
+                    };
+                    studentService.UpdateStudentAsync(updatedStudent).Wait();
+
+                }
+                else if (answer == "10")
                 {
                     exit = true;
                 }
