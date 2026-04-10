@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using DAL.Data.Interfaces;
@@ -74,6 +75,27 @@ namespace Console_Student_Class_01
             Console.WriteLine($"Student with ID {student.StudentID} has been updated.");
             Console.WriteLine("------------------------------------------------");
         }
+
+        public async Task<Student> FindStudentByIdAsync(int studentId)
+        {
+            var student = await _studentRepository.GetByIdAsync(studentId);
+            if (student != null)
+            {
+                Console.WriteLine(
+                    $"Student found: ID = {student.StudentID}, " +
+                    $"Name = {student.StudentName}, " +
+                    $"Surname = {student.StudentSurename}, " +
+                    $"Email = {student.StudentEmail}");
+            }
+            else
+            {
+                Console.WriteLine("Student not found.");
+            }
+            Console.WriteLine("------------------------------------------------");
+            return student;
+        }
+
+     
 
     }
 }

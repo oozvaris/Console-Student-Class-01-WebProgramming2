@@ -101,5 +101,35 @@ namespace DAL.Data
 
         }
 
+        public async Task<Student> GetByIdAsync(int id)
+        {
+            const string sql = """
+                               SELECT StudentID, StudentName, StudentSurename, StudentEmail 
+                               FROM Student 
+                               WHERE StudentID = @StudentID
+                               """;
+            await using var connection = new SqlConnection(_connectionString);
+            await using var command = new SqlCommand(sql, connection);
+            command.Parameters.AddWithValue("@StudentID", id);
+            await connection.OpenAsync();
+            await using var reader = await command.ExecuteReaderAsync();
+            if (await reader.ReadAsync())
+            {
+                return new Student
+                {
+                    StudentID = reader.GetInt32(reader.GetOrdinal("StudentID")),
+                    StudentName = reader.GetString(reader.GetOrdinal("StudentName")),
+                    StudentSurename = reader.GetString(reader.GetOrdinal("StudentSurename")),
+                    StudentEmail = reader.GetString(reader.GetOrdinal("StudentEmail"))
+                };
+            }
+            
+            return null;
+
+            // throw new KeyNotFoundException($"Student with ID {id} not found.");
+
+
+        }
+
     }
 }

@@ -80,7 +80,10 @@ namespace Console_Student_Class_01
                 }
                 else if (answer == "3")
                 {
-                    FindStudent(studentList);
+                    Console.WriteLine("Finding student...");
+                    Console.WriteLine("Enter student ID to find:");
+                    int studentId = Convert.ToInt32(Console.ReadLine());
+                    studentService.FindStudentByIdAsync(studentId).Wait();
                 }
                 else if (answer == "4")
                 {
