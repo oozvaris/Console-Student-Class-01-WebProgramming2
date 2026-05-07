@@ -77,7 +77,7 @@ namespace Console_Student_Class_01
                     {
                         StudentID = studentId,
                         StudentName = newName,
-                        StudentSurename = newSurname,
+                        StudentSurname = newSurname,
                         StudentEmail = newEmail
                     };
                     studentService.UpdateStudentAsync(updatedStudent).Wait();

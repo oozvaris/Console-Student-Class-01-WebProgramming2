@@ -29,7 +29,7 @@ namespace Console_Student_Class_01
                 Console.WriteLine("Student List Item");
                 Console.WriteLine("Student ID : " + s.StudentID);
                 Console.WriteLine("Student Name : " + s.StudentName);
-                Console.WriteLine("Student Surename : " + s.StudentSurename);
+                Console.WriteLine("Student Surename : " + s.StudentSurname);
                 Console.WriteLine("Student Email : " + s.StudentEmail);
                 Console.WriteLine("------------------------------------------------");
             }
@@ -55,7 +55,7 @@ namespace Console_Student_Class_01
             return new Student
             {
                 StudentName = name,
-                StudentSurename = surname,
+                StudentSurname = surname,
                 StudentEmail = email
             };
 
@@ -84,7 +84,7 @@ namespace Console_Student_Class_01
                 Console.WriteLine(
                     $"Student found: ID = {student.StudentID}, " +
                     $"Name = {student.StudentName}, " +
-                    $"Surname = {student.StudentSurename}, " +
+                    $"Surname = {student.StudentSurname}, " +
                     $"Email = {student.StudentEmail}");
             }
             else

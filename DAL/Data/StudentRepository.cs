@@ -25,7 +25,7 @@ namespace DAL.Data
         {
             var students = new List<Student>();
             const string sql = """
-                               SELECT StudentID, StudentName, StudentSurename, StudentEmail 
+                               SELECT StudentID, StudentName, StudentSurname, StudentEmail 
                                FROM Student
                                ORDER BY StudentName
                                """;
@@ -41,7 +41,7 @@ namespace DAL.Data
                 {
                     StudentID = reader.GetInt32(reader.GetOrdinal("StudentID")),
                     StudentName = reader.GetString(reader.GetOrdinal("StudentName")),
-                    StudentSurename = reader.GetString(reader.GetOrdinal("StudentSurename")),
+                    StudentSurname = reader.GetString(reader.GetOrdinal("StudentSurname")),
                     StudentEmail = reader.GetString(reader.GetOrdinal("StudentEmail"))
                 };
                 students.Add(student);
@@ -53,8 +53,8 @@ namespace DAL.Data
         public async Task<int> CreateAsync(Student student)
         {
             const string sql = """
-                               INSERT INTO Student (StudentName, StudentSurename, StudentEmail) 
-                               VALUES (@StudentName, @StudentSurename, @StudentEmail);
+                               INSERT INTO Student (StudentName, StudentSurname, StudentEmail) 
+                               VALUES (@StudentName, @StudentSurname, @StudentEmail);
                                SELECT SCOPE_IDENTITY();
                                """;
 
@@ -62,7 +62,7 @@ namespace DAL.Data
             await using var command = new SqlCommand(sql, connection);
 
             command.Parameters.AddWithValue("@StudentName", student.StudentName);
-            command.Parameters.AddWithValue("@StudentSurename", student.StudentSurename);
+            command.Parameters.AddWithValue("@StudentSurname", student.StudentSurname);
             command.Parameters.AddWithValue("@StudentEmail", student.StudentEmail);
 
             await connection.OpenAsync();
@@ -87,14 +87,14 @@ namespace DAL.Data
         {
             const string sql = """
                                UPDATE Student 
-                               SET StudentName = @StudentName, StudentSurename = @StudentSurename, StudentEmail = @StudentEmail 
+                               SET StudentName = @StudentName, StudentSurname = @StudentSurname, StudentEmail = @StudentEmail 
                                WHERE StudentID = @StudentID
                                """;
             await using var connection = new SqlConnection(_connectionString);
             await using var command = new SqlCommand(sql, connection);
             command.Parameters.AddWithValue("@StudentID", student.StudentID);
             command.Parameters.AddWithValue("@StudentName", student.StudentName);
-            command.Parameters.AddWithValue("@StudentSurename", student.StudentSurename);
+            command.Parameters.AddWithValue("@StudentSurname", student.StudentSurname);
             command.Parameters.AddWithValue("@StudentEmail", student.StudentEmail);
             await connection.OpenAsync();
             await command.ExecuteNonQueryAsync();
@@ -104,7 +104,7 @@ namespace DAL.Data
         public async Task<Student> GetByIdAsync(int id)
         {
             const string sql = """
-                               SELECT StudentID, StudentName, StudentSurename, StudentEmail 
+                               SELECT StudentID, StudentName, StudentSurname, StudentEmail 
                                FROM Student 
                                WHERE StudentID = @StudentID
                                """;
@@ -119,7 +119,7 @@ namespace DAL.Data
                 {
                     StudentID = reader.GetInt32(reader.GetOrdinal("StudentID")),
                     StudentName = reader.GetString(reader.GetOrdinal("StudentName")),
-                    StudentSurename = reader.GetString(reader.GetOrdinal("StudentSurename")),
+                    StudentSurname = reader.GetString(reader.GetOrdinal("StudentSurname")),
                     StudentEmail = reader.GetString(reader.GetOrdinal("StudentEmail"))
                 };
             }
