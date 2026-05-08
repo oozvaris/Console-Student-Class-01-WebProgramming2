@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,23 +19,12 @@ namespace SchoolApp_MVC.Services
             _studentRepository = studentRepository;
         }
 
-        public async Task DisplayStudentListAsync()
+        public async Task<IReadOnlyList<Student>> DisplayStudentListAsync()
         {
             var students = await _studentRepository.GetAllAsync();
 
-
-
-            foreach (Student s in students)
-            {
-                Console.WriteLine("Student List Item");
-                Console.WriteLine("Student ID : " + s.StudentID);
-                Console.WriteLine("Student Name : " + s.StudentName);
-                Console.WriteLine("Student Surename : " + s.StudentSurname);
-                Console.WriteLine("Student Email : " + s.StudentEmail);
-                Console.WriteLine("------------------------------------------------");
-            }
-
-            Console.WriteLine("Total number of students: " + students.Count);
+            return students;
+            
         }
 
         public async Task AddStudentAsync(Student student)

@@ -11,13 +11,23 @@ namespace SchoolApp_MVC.Controllers
         {
             _studentService = studentService;
 
-            Student s = _studentService.FindStudentByIdAsync(1).GetAwaiter().GetResult();
+            // Student s = _studentService.FindStudentByIdAsync(1).GetAwaiter().GetResult();
+
         }
 
         public IActionResult Index()
         {
-            return View();
+            var students = _studentService.DisplayStudentListAsync().GetAwaiter().GetResult();
+
+            return View(students);
         }
+
+        //public async Task<IActionResult> Index()
+        //{
+        //    var students = await _studentService.DisplayStudentListAsync();
+
+        //    return View(students);
+        //}
 
         public IActionResult StudentsList(int id)
         {
