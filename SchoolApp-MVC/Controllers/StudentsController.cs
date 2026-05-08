@@ -15,19 +15,29 @@ namespace SchoolApp_MVC.Controllers
 
         }
 
-        public IActionResult Index()
+        //public IActionResult Index()
+        //{
+        //    var students = _studentService.DisplayStudentListAsync().GetAwaiter().GetResult();
+
+        //    return View(students);
+        //}
+
+        public async Task<IActionResult> Index()
         {
-            var students = _studentService.DisplayStudentListAsync().GetAwaiter().GetResult();
+            var students = await _studentService.DisplayStudentListAsync();
 
             return View(students);
         }
 
-        //public async Task<IActionResult> Index()
-        //{
-        //    var students = await _studentService.DisplayStudentListAsync();
-
-        //    return View(students);
-        //}
+        public async Task<IActionResult> Details(int id)
+        {
+            var student = await _studentService.FindStudentByIdAsync(id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+            return View(student);
+        }
 
         public IActionResult StudentsList(int id)
         {

@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DAL.Data.Interfaces;
 using DAL.Models;
+using SchoolApp_MVC.Dtos.Students;
 
 namespace SchoolApp_MVC.Services
 {
@@ -19,11 +20,11 @@ namespace SchoolApp_MVC.Services
             _studentRepository = studentRepository;
         }
 
-        public async Task<IReadOnlyList<Student>> DisplayStudentListAsync()
+        public async Task<IReadOnlyList<StudentReadDto>> DisplayStudentListAsync()
         {
             var students = await _studentRepository.GetAllAsync();
 
-            return students;
+            return students.Select(MapToReadDto).ToList();
             
         }
 
@@ -66,26 +67,25 @@ namespace SchoolApp_MVC.Services
             Console.WriteLine("------------------------------------------------");
         }
 
-        public async Task<Student> FindStudentByIdAsync(int studentId)
+        public async Task<StudentReadDto?> FindStudentByIdAsync(int studentId)
         {
             var student = await _studentRepository.GetByIdAsync(studentId);
-            if (student != null)
-            {
-                Console.WriteLine(
-                    $"Student found: ID = {student.StudentID}, " +
-                    $"Name = {student.StudentName}, " +
-                    $"Surname = {student.StudentSurname}, " +
-                    $"Email = {student.StudentEmail}");
-            }
-            else
-            {
-                Console.WriteLine("Student not found.");
-            }
-            Console.WriteLine("------------------------------------------------");
-            return student;
+           
+            return student is null ? null : MapToReadDto(student);
         }
 
-     
+        private static StudentReadDto MapToReadDto(Student student)
+        {
+            return new StudentReadDto
+            {
+                StudentID = student.StudentID,
+                StudentName = student.StudentName,
+                StudentSurname = student.StudentSurname,
+                StudentEmail = student.StudentEmail
+            };
+        }
+
+
 
     }
 }
