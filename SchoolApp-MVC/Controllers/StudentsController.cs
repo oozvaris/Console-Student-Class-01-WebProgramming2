@@ -1,5 +1,6 @@
 ﻿using DAL.Models;
 using Microsoft.AspNetCore.Mvc;
+using SchoolApp_MVC.Dtos.Students;
 using SchoolApp_MVC.Services;
 
 namespace SchoolApp_MVC.Controllers
@@ -38,6 +39,59 @@ namespace SchoolApp_MVC.Controllers
             }
             return View(student);
         }
+
+        public async Task<IActionResult> Edit(int id)
+        {
+            var student = await _studentService.FindStudentByIdAsync(id);
+            if (student == null)
+            {
+                return NotFound();
+            }
+
+            var studentUpdateDto = new StudentUpdateDto
+            {
+                StudentID = student.StudentID,
+                StudentName = student.StudentName,
+                StudentSurname = student.StudentSurname,
+                StudentEmail = student.StudentEmail
+            };
+
+            return View(studentUpdateDto);
+
+        }
+
+        [HttpPost]
+
+        public async Task<IActionResult> Edit (int id, StudentUpdateDto studentUpdateDto)
+        {
+            if (id != studentUpdateDto.StudentID)
+            {
+                return BadRequest();
+            }
+            if (!ModelState.IsValid)
+            {
+                return View(studentUpdateDto);
+            }
+            var studentToUpdate = new Student
+            {
+                StudentID = studentUpdateDto.StudentID,
+                StudentName = studentUpdateDto.StudentName,
+                StudentSurname = studentUpdateDto.StudentSurname,
+                StudentEmail = studentUpdateDto.StudentEmail
+            };
+
+            //var result = await _studentService.UpdateAsync(id, dto);
+            //if (!result.Success)
+            //{
+            //    ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "Update operation failed.");
+            //    return View(dto);
+            //}
+
+
+            return RedirectToAction(nameof(Index));
+        }
+
+
 
         public IActionResult StudentsList(int id)
         {
