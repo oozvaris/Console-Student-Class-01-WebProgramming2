@@ -60,11 +60,13 @@ namespace SchoolApp_MVC.Services
 
         }
 
-        public async Task UpdateStudentAsync(Student student)
+        public async Task<bool> UpdateStudentAsync(Student student)
         {
-            await _studentRepository.UpdateAsync(student);
+            var result = await _studentRepository.UpdateAsync(student);
+
             Console.WriteLine($"Student with ID {student.StudentID} has been updated.");
             Console.WriteLine("------------------------------------------------");
+            return result;
         }
 
         public async Task<StudentReadDto?> FindStudentByIdAsync(int studentId)

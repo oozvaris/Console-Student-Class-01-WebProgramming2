@@ -80,14 +80,15 @@ namespace SchoolApp_MVC.Controllers
                 StudentEmail = studentUpdateDto.StudentEmail
             };
 
-            //var result = await _studentService.UpdateAsync(id, dto);
-            //if (!result.Success)
-            //{
-            //    ModelState.AddModelError(string.Empty, result.ErrorMessage ?? "Update operation failed.");
-            //    return View(dto);
-            //}
+            var result = await _studentService.UpdateStudentAsync(studentToUpdate);
 
+            if (!result)
+            {
+                ModelState.AddModelError(string.Empty, "Update operation failed.");
+                return View(studentUpdateDto);
+            }
 
+            TempData["SuccessMessage"] = "Student updated successfully.";
             return RedirectToAction(nameof(Index));
         }
 
