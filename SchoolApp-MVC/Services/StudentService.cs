@@ -28,28 +28,13 @@ namespace SchoolApp_MVC.Services
             
         }
 
-        public async Task AddStudentAsync(Student student)
+        public async Task<bool> AddStudentAsync(Student student)
         {
             int newStudentId = await _studentRepository.CreateAsync(student);
             Console.WriteLine($"New student added with ID: {newStudentId}");
             Console.WriteLine("------------------------------------------------");
-        }
 
-        public Student RegisterStudent()
-        {
-            Console.WriteLine("Enter student name:");
-            string name = Console.ReadLine();
-            Console.WriteLine("Enter student surname:");
-            string surname = Console.ReadLine();
-            Console.WriteLine("Enter student email:");
-            string email = Console.ReadLine();
-            return new Student
-            {
-                StudentName = name,
-                StudentSurname = surname,
-                StudentEmail = email
-            };
-
+            return true;
         }
 
         public async Task DeleteStudentAsync(int studentId)

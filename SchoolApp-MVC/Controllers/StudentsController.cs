@@ -61,7 +61,6 @@ namespace SchoolApp_MVC.Controllers
         }
 
         [HttpPost]
-
         public async Task<IActionResult> Edit (int id, StudentUpdateDto studentUpdateDto)
         {
             if (id != studentUpdateDto.StudentID)
@@ -92,7 +91,51 @@ namespace SchoolApp_MVC.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        public async Task<IActionResult> Delete(int id)
+        {
+            var student = await _studentService.FindStudentByIdAsync(id);
+            if (student == null)
+            {
+                return NotFound();
+            }
 
+            await _studentService.DeleteStudentAsync(id);
+
+            TempData["SuccessMessage"] = "Student deleted successfully.";
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Create()
+        {
+            return View(new StudentCreateDto());
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create(StudentCreateDto studentCreateDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(studentCreateDto);
+            }
+            var studentToCreate = new Student
+            {
+                // StudentID = 0,
+                StudentName = studentCreateDto.StudentName,
+                StudentSurname = studentCreateDto.StudentSurname,
+                StudentEmail = studentCreateDto.StudentEmail
+            };
+
+            var result = await _studentService.AddStudentAsync(studentToCreate);
+
+            if (!result)
+            {
+                ModelState.AddModelError(string.Empty, "Create operation failed.");
+                return View(studentCreateDto);
+            }
+
+            TempData["SuccessMessage"] = "Student crated successfully.";
+            return RedirectToAction(nameof(Index));
+        }
 
         public IActionResult StudentsList(int id)
         {
